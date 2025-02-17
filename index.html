@@ -6,10 +6,12 @@
     <title>SEO-Optimized Image Carousel</title>
     <style>
         * { box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; }
+        body { font-family: Arial, sans-serif; text-align: center; }
         .carousel { position: relative; max-width: 800px; margin: auto; overflow: hidden; }
-        .carousel-images { display: flex; transition: transform 0.5s ease-in-out; }
-        .carousel img { width: 100%; height: auto; }
+        .carousel-images { display: flex; flex-direction: column; align-items: center; }
+        .slide { display: none; }
+        .slide img { width: 100%; height: 500px; object-fit: cover; }
+        .caption { font-size: 16px; color: #333; margin-top: 10px; font-style: italic; }
         .prev, .next { position: absolute; top: 50%; transform: translateY(-50%); 
                       background: rgba(0,0,0,0.5); color: white; border: none;
                       cursor: pointer; padding: 10px; }
@@ -19,49 +21,33 @@
         .dot { height: 10px; width: 10px; margin: 0 5px; background: gray; 
                border-radius: 50%; display: inline-block; cursor: pointer; }
         .active { background: black; }
-        .carousel-description { max-width: 800px; margin: 20px auto; text-align: center; font-size: 16px; }
-        .carousel img {
-            height: 500px; /* Set a fixed height */
-            width: auto; /* Let the width adjust automatically */
-            object-fit: cover; /* Ensures images fill the space without stretching */
-            display: block;
-            margin: 0 auto; /* Centers the image */
-        .caption {
-            text-align: center; /* Centers text below image */
-            font-size: 16px; /* Adjust as needed */
-            color: #333; /* Dark gray text */
-            margin-top: 10px; /* Space between image and text */
-            font-style: italic; /* Optional: italicize captions */
-        }
-    }
-
     </style>
 </head>
 <body>
     <div class="carousel" onmouseover="pauseCarousel()" onmouseout="resumeCarousel()">
         <div class="carousel-images">
-             <div class="slide">
-                <img src="https://XeniaReview.github.io/xenia-carousel/Aristippus and His Companions after Being Shipwrecked, Seeing Mathematical Diagrams, Realize the Land Was Inhabited, Antonio Zucchi, 1768.jpg" alt="A painting depicting Aristippus and his companions arriving on a shore after a shipwreck. They observe mathematical diagrams drawn in the sand, recognizing them as signs of civilization. The figures are dressed in classical attire, with gestures indicating realization or discussion.">
-                <p class="caption">Aristippus and His Companions after Being Shipwrecked, Seeing Mathematical Diagrams, Realize the Land Was Inhabited, Antonio Zucchi, 1768</p>
+            <div class="slide">
+                <img src="https://XeniaReview.github.io/xenia-carousel/Aristippus.jpg" alt="A painting depicting Aristippus and his companions arriving on a shore after a shipwreck.">
+                <p class="caption">Aristippus and His Companions, Antonio Zucchi, 1768</p>
             </div>
-        <div class="slide">
-            <img src="https://XeniaReview.github.io/xenia-carousel/Hermes Ordering Calypso to Release Odysseus, Gerard de Lairesse, c. 1670.jpg" alt="A painting showing Hermes standing before the seated Calypso, gesturing as he delivers Zeus’s command. Odysseus is nearby, appearing contemplative or preparing for departure. The scene is set in a natural landscape with draped garments and classical-style figures.2">
-            <p class="caption">Hermes Ordering Calypso to Release Odysseus, Gerard de Lairesse, c. 1670</p>
+            <div class="slide">
+                <img src="https://XeniaReview.github.io/xenia-carousel/Hermes.jpg" alt="A painting showing Hermes standing before the seated Calypso, gesturing as he delivers Zeus’s command.">
+                <p class="caption">Hermes Ordering Calypso to Release Odysseus, Gerard de Lairesse, c. 1670</p>
+            </div>
+            <div class="slide">
+                <img src="https://XeniaReview.github.io/xenia-carousel/Hospitality.jpg" alt="An illustration of a seated figure extending a drinking vessel to a standing guest.">
+                <p class="caption">Hospitality Scene, Le Comte de Lamburg, 1813–1824</p>
+            </div>
         </div>
-        <div class="slide">
-            <img src="https://XeniaReview.github.io/xenia-carousel/Hospitality Scene (Collection of Greek Vases), Le Comte de Lamburg, 1813–1824.jpg" alt="An illustration of a seated figure extending a drinking vessel to a standing guest. The two figures face each other, emphasizing an act of hospitality.">
-            <p class="caption">Hospitality Scene (Collection of Greek Vases), Le Comte de Lamburg, 1813–1824</p>
-        </div>
-     </div>
         <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
         <button class="next" onclick="moveSlide(1)">&#10095;</button>
     </div>
     <div class="dots"></div>
-    <div class="carousel-description">This carousel showcases classical artworks reflecting Xenia Review’s themes of hospitality and storytelling.</div>
+
     <script>
         let slideIndex = 0;
         let autoPlay = true;
-        const slides = document.querySelectorAll(".carousel img");
+        const slides = document.querySelectorAll(".slide");
         const dotsContainer = document.querySelector(".dots");
 
         slides.forEach((_, i) => {
@@ -94,12 +80,8 @@
             setTimeout(autoSlide, 5000);
         }
 
-        function pauseCarousel() {
-            autoPlay = false;
-        }
-        function resumeCarousel() {
-            autoPlay = true;
-        }
+        function pauseCarousel() { autoPlay = false; }
+        function resumeCarousel() { autoPlay = true; }
 
         updateCarousel();
         setTimeout(autoSlide, 5000);
