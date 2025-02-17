@@ -92,6 +92,7 @@
         .carousel-images {
             position: relative;
             display: flex;
+            transition: transform 0.5s ease-in-out;
             width: 100%;
             height: auto;
         }
@@ -101,7 +102,7 @@
             position: absolute;
             width: 100%;
             opacity: 0;
-            visibility: hidden;
+            flex: 0 0 100%;
             transition: opacity 0.5s ease-in-out;
         }
 
@@ -168,7 +169,7 @@
     </style>
 </head>
 <body>
-    <div class="carousel" onmouseover="pauseCarousel()" onmouseout="resumeCarousel()">
+    <div class="carousel" role="region" aria-label="Xenia Review Image Carousel" onmouseover="pauseCarousel()" onmouseout="resumeCarousel()">
         <div class="carousel-images">
             <figure class="slide">
                 <picture>
