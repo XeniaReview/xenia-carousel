@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEO-Optimized Image Carousel</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; }
+        .carousel { position: relative; max-width: 800px; margin: auto; overflow: hidden; }
+        .carousel-images { display: flex; transition: transform 0.5s ease-in-out; }
+        .carousel img { width: 100%; height: auto; }
+        .prev, .next { position: absolute; top: 50%; transform: translateY(-50%); 
+                      background: rgba(0,0,0,0.5); color: white; border: none;
+                      cursor: pointer; padding: 10px; }
+        .prev { left: 10px; }
+        .next { right: 10px; }
+        .dots { text-align: center; margin-top: 10px; }
+        .dot { height: 10px; width: 10px; margin: 0 5px; background: gray; 
+               border-radius: 50%; display: inline-block; cursor: pointer; }
+        .active { background: black; }
+        .carousel-description { max-width: 800px; margin: 20px auto; text-align: center; font-size: 16px; }
+    </style>
+</head>
+<body>
+    <div class="carousel" onmouseover="pauseCarousel()" onmouseout="resumeCarousel()">
+        <div class="carousel-images">
+            <img src="https://drive.google.com/uc?export=view&id=1zemtjbOPl_XZBcfYcko-KtZ3bZ-gquoo" alt="A painting depicting Aristippus and his companions arriving on a shore after a shipwreck. They observe mathematical diagrams drawn in the sand, recognizing them as signs of civilization. The figures are dressed in classical attire, with gestures indicating realization or discussion.">
+            <img src="https://drive.google.com/uc?export=view&id=1eU0-xZQsUZX8JEfpU3gDsqJXW0MBWsB6" alt="A painting showing Hermes standing before the seated Calypso, gesturing as he delivers Zeus’s command. Odysseus is nearby, appearing contemplative or preparing for departure. The scene is set in a natural landscape with draped garments and classical-style figures.2">
+            <img src="https://drive.google.com/uc?export=view&id=1e5Vls500ycUHF-fqLk9G1q9MVzdRgzOj" alt="An illustration of a seated figure extending a drinking vessel to a standing guest. The two figures face each other, emphasizing an act of hospitality.">
+        </div>
+        <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+        <button class="next" onclick="moveSlide(1)">&#10095;</button>
+    </div>
+    <div class="dots"></div>
+    <div class="carousel-description">This carousel showcases classical artworks reflecting Xenia Review’s themes of hospitality and storytelling.</div>
+    <script>
+        let slideIndex = 0;
+        let autoPlay = true;
+        const slides = document.querySelectorAll(".carousel img");
+        const dotsContainer = document.querySelector(".dots");
+
+        slides.forEach((_, i) => {
+            const dot = document.createElement("span");
+            dot.classList.add("dot");
+            dot.addEventListener("click", () => goToSlide(i));
+            dotsContainer.appendChild(dot);
+        });
+        const dots = document.querySelectorAll(".dot");
+
+        function updateCarousel() {
+            slides.forEach((s, i) => s.style.display = i === slideIndex ? "block" : "none");
+            dots.forEach((d, i) => d.classList.toggle("active", i === slideIndex));
+        }
+
+        function moveSlide(n) {
+            slideIndex = (slideIndex + n + slides.length) % slides.length;
+            updateCarousel();
+        }
+
+        function goToSlide(n) {
+            slideIndex = n;
+            updateCarousel();
+        }
+
+        function autoSlide() {
+            if (autoPlay) {
+                moveSlide(1);
+            }
+            setTimeout(autoSlide, 5000);
+        }
+
+        function pauseCarousel() {
+            autoPlay = false;
+        }
+        function resumeCarousel() {
+            autoPlay = true;
+        }
+
+        updateCarousel();
+        setTimeout(autoSlide, 5000);
+    </script>
+</body>
+</html>
