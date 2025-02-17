@@ -7,63 +7,99 @@
     <link href="https://fonts.googleapis.com/css2?family=Gentium+Plus&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; text-align: center; }
+        body { font-family: 'Gentium Plus', serif; text-align: center; margin: 0; }
+
+        /* Carousel Container */
         .carousel {
             position: relative;
-            width: 90%; /* Scales with screen size */
-            max-width: 800px; /* Prevents it from getting too large on big screens */
+            width: 90%;
+            max-width: 800px;
             margin: auto;
             overflow: hidden;
         }
+
+        /* Image Wrapper */
         .carousel-images {
-                display: flex;
-                transition: transform 0.5s ease-in-out;
+            position: relative;
+            display: flex;
+            width: 100%;
+            height: auto;
         }
-        .carousel img {
-            width: 100%;  /* Makes the images fully responsive */
-            height: 60vh; /* Adjust height based on screen size */
-            max-height: 500px; /* Limits max height on large screens */
-            object-fit: contain; /* Ensures the whole image is visible */
+
+        /* Individual Slides */
+        .slide {
+            position: absolute;
+            width: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        /* Ensure Images Scale Properly */
+        .slide img {
+            width: 100%;
+            height: auto;
+            max-height: 60vh;
+            object-fit: contain;
             display: block;
-            margin: 0 auto;
+            margin: auto;
         }
-        .slide { display: none; }
-        .slide img { width: 100%; height: 500px; object-fit: cover; }
-        .caption { font-size: 18px; color: #333; margin-top: 10px; font-style: italic; }
-        /* Responsive button sizes */
+
+        /* Active Slide */
+        .slide.active {
+            opacity: 1;
+            position: relative;
+        }
+
+        /* Caption */
+        .caption {
+            font-size: 1.2rem;
+            color: #333;
+            margin-top: 10px;
+            font-style: italic;
+            text-align: center;
+        }
+
+        /* Navigation Buttons */
         .prev, .next {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.5);
             color: white;
             border: none;
             cursor: pointer;
-            padding: 1vw; /* Adjusts with screen width */
-            font-size: 2vw; /* Scales button text */
+            padding: 10px;
+            font-size: 1.5rem;
+            max-width: 40px;
+            max-height: 40px;
         }
+        
         .prev { left: 10px; }
         .next { right: 10px; }
-        .dots { text-align: center; margin-top: 10px; }
-        .dot { height: 10px; width: 10px; margin: 0 5px; background: gray; 
-               border-radius: 50%; display: inline-block; cursor: pointer; }
-        .active { background: black; }
-        body { font-family: 'Gentium Plus', serif; }
-        .caption { font-family: 'Gentium Plus', serif; }
-        /* Adjust font sizes for captions */
-        .caption {
+
+        /* Dots Navigation */
+        .dots {
             text-align: center;
-            font-size: 1.2rem; /* Adjust for readability */
-            color: #333;
             margin-top: 10px;
-            font-style: italic;
         }
+
+        .dot {
+            height: 10px;
+            width: 10px;
+            margin: 0 5px;
+            background: gray;
+            border-radius: 50%;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .dot.active { background: black; }
     </style>
 </head>
 <body>
     <div class="carousel" onmouseover="pauseCarousel()" onmouseout="resumeCarousel()">
         <div class="carousel-images">
-            <div class="slide">
+            <div class="slide active">
                 <img src="https://XeniaReview.github.io/xenia-carousel/Aristippus-Shipwrecked-Diagrams-Zucchi-1768.jpg" alt="A painting depicting Aristippus and his companions arriving on a shore after a shipwreck. They observe mathematical diagrams drawn in the sand, recognizing them as signs of civilization. The figures are dressed in classical attire, with gestures indicating realization or discussion.">
                 <p class="caption">Aristippus and His Companions after Being Shipwrecked, Seeing Mathematical Diagrams, Realize the Land Was Inhabited, Antonio Zucchi, 1768</p>
             </div>
@@ -124,6 +160,7 @@
         const slides = document.querySelectorAll(".slide");
         const dotsContainer = document.querySelector(".dots");
 
+        // Generate dots dynamically
         slides.forEach((_, i) => {
             const dot = document.createElement("span");
             dot.classList.add("dot");
@@ -134,17 +171,16 @@
 
         function updateCarousel() {
             slides.forEach((s, i) => {
-            if (i === slideIndex) {
-                s.style.display = "block";
-                s.setAttribute("aria-live", "polite"); // Make active image readable
-            } else {
-                s.style.display = "none";
-                s.removeAttribute("aria-live"); // Remove live region from hidden images
-            }
-        });
-        dots.forEach((d, i) => d.classList.toggle("active", i === slideIndex));
-    }
-
+                if (i === slideIndex) {
+                    s.classList.add("active");
+                    s.setAttribute("aria-live", "polite"); // Make active image readable
+                } else {
+                    s.classList.remove("active");
+                    s.removeAttribute("aria-live"); // Remove live region from hidden images
+                }
+            });
+            dots.forEach((d, i) => d.classList.toggle("active", i === slideIndex));
+        }
 
         function moveSlide(n) {
             slideIndex = (slideIndex + n + slides.length) % slides.length;
