@@ -101,6 +101,7 @@
             position: absolute;
             width: 100%;
             opacity: 0;
+            display: none;
             transition: opacity 0.5s ease-in-out;
         }
 
@@ -172,7 +173,7 @@
             <figure class="slide">
                 <picture>
                     <source srcset="https://XeniaReview.github.io/xenia-carousel/Aristippus-Shipwrecked-Diagrams-Zucchi-1768.webp" type="image/webp">
-                    <img src="https://XeniaReview.github.io/xenia-carousel/Aristippus-Shipwrecked-Diagrams-Zucchi-1768.jpg" alt="A painting depicting Aristippus and his companions arriving on a shore after a shipwreck. They observe mathematical diagrams drawn in the sand, recognizing them as signs of civilization. The figures are dressed in classical attire, with gestures indicating realization or discussion." loading="lazy">
+                    <img src="https://XeniaReview.github.io/xenia-carousel/Aristippus-Shipwrecked-Diagrams-Zucchi-1768.jpg" alt="A painting depicting Aristippus and his companions arriving on a shore after a shipwreck. They observe mathematical diagrams drawn in the sand, recognizing them as signs of civilization. The figures are dressed in classical attire, with gestures indicating realization or discussion.">
                 </picture>
                 <figcaption class="caption">Aristippus and His Companions after Being Shipwrecked, Seeing Mathematical Diagrams, Realize the Land Was Inhabited, Antonio Zucchi, 1768</figcaption>
             </figure>
@@ -279,9 +280,11 @@
             slides.forEach((s, i) => {
                 if (i === slideIndex) {
                     s.classList.add("active");
+                    s.style.display = "block";
                     s.setAttribute("aria-live", "polite"); // Make active image readable
                 } else {
                     s.classList.remove("active");
+                     s.style.display = "none";
                     s.removeAttribute("aria-live"); // Remove live region from hidden images
                 }
             });
