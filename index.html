@@ -90,17 +90,20 @@
 
         /* Image Wrapper */
         .carousel-images {
+            position: relative;
             display: flex;
-            transition: transform 0.5s ease-in-out;
             width: 100%;
+            height: auto;
         }
 
+        /* Individual Slides */
         .slide {
-            min-width: 100%;
-            transition: transform 0.5s ease-in-out;
-            opacity: 1;
-            position: relative;
+            position: absolute;
+            width: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
         }
+
         /* Ensure Images Scale Properly */
         .slide img {
             width: 100%;
@@ -257,22 +260,56 @@
     
     <div class="dots"></div>
 
-   <script>
-        let currentIndex = 0;
-        const slides = document.querySelectorAll('.slide');
-        const totalSlides = slides.length;
-        const carouselImages = document.querySelector('.carousel-images');
+    <script>
+        let slideIndex = 0;
+        let autoPlay = true;
+        const slides = document.querySelectorAll(".slide");
+        const dotsContainer = document.querySelector(".dots");
 
-        function moveSlide(direction) {
-            currentIndex += direction;
-            if (currentIndex < 0) {
-                currentIndex = totalSlides - 1;
-            } else if (currentIndex >= totalSlides) {
-                currentIndex = 0;
-            }
-            const offset = -currentIndex * 100;
-            carouselImages.style.transform = `translateX(${offset}%)`;
+        // Generate dots dynamically
+        slides.forEach((_, i) => {
+            const dot = document.createElement("span");
+            dot.classList.add("dot");
+            dot.addEventListener("click", () => goToSlide(i));
+            dotsContainer.appendChild(dot);
+        });
+        const dots = document.querySelectorAll(".dot");
+
+        function updateCarousel() {
+            slides.forEach((s, i) => {
+                if (i === slideIndex) {
+                    s.classList.add("active");
+                    s.setAttribute("aria-live", "polite"); // Make active image readable
+                } else {
+                    s.classList.remove("active");
+                    s.removeAttribute("aria-live"); // Remove live region from hidden images
+                }
+            });
+            dots.forEach((d, i) => d.classList.toggle("active", i === slideIndex));
         }
+
+        function moveSlide(n) {
+            slideIndex = (slideIndex + n + slides.length) % slides.length;
+            updateCarousel();
+        }
+
+        function goToSlide(n) {
+            slideIndex = n;
+            updateCarousel();
+        }
+
+        function autoSlide() {
+            if (autoPlay) {
+                moveSlide(1);
+            }
+            setTimeout(autoSlide, 5000);
+        }
+
+        function pauseCarousel() { autoPlay = false; }
+        function resumeCarousel() { autoPlay = true; }
+
+        updateCarousel();
+        setTimeout(autoSlide, 5000);
     </script>
 </body>
 </html>
