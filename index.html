@@ -89,20 +89,24 @@
         }
 
         /* Image Wrapper */
+       /* Ensure slides are stacked properly */
         .carousel-images {
             position: relative;
             display: flex;
             width: 100%;
             height: auto;
+            overflow: hidden;
         }
 
-        /* Individual Slides */
+        /* Ensure slides are in the same position */
         .slide {
             position: absolute;
             width: 100%;
             opacity: 0;
+            left: 0; /* Ensures images don’t shift */
             transition: opacity 0.5s ease-in-out;
         }
+
 
         /* Ensure Images Scale Properly */
         .slide img {
