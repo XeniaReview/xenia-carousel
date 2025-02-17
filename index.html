@@ -99,9 +99,18 @@
         const dots = document.querySelectorAll(".dot");
 
         function updateCarousel() {
-            slides.forEach((s, i) => s.style.display = i === slideIndex ? "block" : "none");
-            dots.forEach((d, i) => d.classList.toggle("active", i === slideIndex));
-        }
+            slides.forEach((s, i) => {
+            if (i === slideIndex) {
+                s.style.display = "block";
+                s.setAttribute("aria-live", "polite"); // Make active image readable
+            } else {
+                s.style.display = "none";
+                s.removeAttribute("aria-live"); // Remove live region from hidden images
+            }
+        });
+        dots.forEach((d, i) => d.classList.toggle("active", i === slideIndex));
+    }
+
 
         function moveSlide(n) {
             slideIndex = (slideIndex + n + slides.length) % slides.length;
